@@ -22,6 +22,7 @@ static DATA_SET: &[((usize, Script, Language), &str)] = &[
     ((128, Script::Arabic, Language::Pes), "قنات قصبه شهر گناباد عمیق‌ترین و قدیمی‌ترین کاریز جهان است."),
     ((134, Script::Arabic, Language::Vie), "Các nhà nước trong lịch sử Việt Nam có những quốc hiệu khác nhau như Xích Quỷ, Văn Lang, Đại Việt, Đại"),
     ((131, Script::Latin, Language::Deu), "Deutschland vereint Alpen, Küsten und Städte wie Berlin. Kultur und Geschichte prägen das Land, das Natur und Moderne verbindet."),
+    ((182, Script::Arabic, Language::Urd), "پاکستان میں ترقی کے لیے حکومت نے نئے اقدامات شروع کیے ہیں تاکہ عوام کو بہتر سہولیات فراہم کی جا سکیں۔"),
 
     // long texts (~365 bytes)
     ((363, Script::Cj, Language::Cmn), "距今60万年-2万年的时间内，北京地区处于旧石器时代，在周口店发现了旧石器时代早期北京直立人、中期新洞人和晚期山顶洞人的典型遗址。北京地区在不晚于1万年前已经开始进入新石器时代。当时该地区人类定居生活固定化，逐渐从山洞中迁徙出来，到平原地区定居[12]。"),
@@ -37,6 +38,7 @@ static DATA_SET: &[((usize, Script, Language), &str)] = &[
     ((366, Script::Arabic, Language::Pes), "فارسی یکی از زبان‌های هندواروپایی و زبان رسمی ایران، افغانستان (با نام دری) و تاجیکستان (با نام تاجیکی) است. این زبان دارای پیشینه‌ای کهن و ادبیاتی غنی می‌باشد و در طول تاریخ، شاعران و نویسندگان بزرگی به این زبان آثار خود را خلق کرده‌اند. فارسی همچنین یکی از زبان‌های مهم منطقه به شمار می‌رود و در سازمان‌های بین‌المللی نیز جایگاه ویژه‌ای دارد."),
     ((365, Script::Latin, Language::Vie), "Lãnh thổ Việt Nam xuất hiện con người sinh sống từ thời đại đồ đá cũ, khởi đầu với các nhà nước Văn Lang, Âu Lạc. Âu Lạc bị nhà Triệu ở phương Bắc thôn tính vào đầu thế kỷ thứ 2 TCN sau đó là thời kỳ Bắc thuộc kéo dài hơn một thiên niên kỷ.Chế độ quân chủ độc lập"),
     ((354, Script::Latin, Language::Deu), "Magdeburg, die Hauptstadt Sachsen-Anhalts, beeindruckt mit dem Magdeburger Dom, dem Jahrtausendturm im Elbauenpark und dem Wasserstraßenkreuz. Der Domplatz ist umgeben von Bauwerken, wie dem Hundertwasserhaus. Der Elbauenpark bietet viele Freizeitmöglichkeiten, während die Magdeburger Börde für fruchtbare Ackerflächen für z.B. Zuckerrüben bekannt ist."),
+    ((588, Script::Arabic, Language::Urd), "پاکستان میں ترقی کے لیے حکومت نے نئے اقدامات شروع کیے ہیں تاکہ عوام کو بہتر سہولیات فراہم کی جا سکیں۔ عراق اور شام نے اعلان کیا ہے کہ دونوں ممالک جلد اپنے اپنے سفیروں کو واپس بغداد اور دمشق بھیج دیں گے۔ وزیراعظم نے کہا کہ ملک میں امن و استحکام کے لیے ہر ممکن کوشش کی جائے گی اور معیشت کو مستحکم بنانے کے لیے اصلاحات جاری رہیں گی۔"),
 ];
 
 criterion_group!(benches, criterion_benchmark);

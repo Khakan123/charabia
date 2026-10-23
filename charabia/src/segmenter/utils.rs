@@ -62,7 +62,7 @@ impl<'fst> FstSegmenter<'fst> {
 ///
 /// It already appened that the fst returned a length that does not necessarily match the characters boundaries.
 /// Creating crashes when decoding the string.
-fn floor_char_boundary(s: &str, length: usize) -> usize {
+pub(crate) fn floor_char_boundary(s: &str, length: usize) -> usize {
     s.char_indices().find(|(idx, _)| *idx >= length).map(|(idx, _)| idx).unwrap_or(s.len())
 }
 
@@ -77,7 +77,7 @@ fn is_max_char_count_reached(s: &str, max_char_count: Option<NonZero<usize>>) ->
 
 /// find the longest key that is prefix of the given value.
 #[inline]
-fn find_longest_prefix(fst: &Fst<&[u8]>, value: &[u8]) -> Option<(u64, usize)> {
+pub(crate) fn find_longest_prefix(fst: &Fst<&[u8]>, value: &[u8]) -> Option<(u64, usize)> {
     let mut node = fst.root();
     let mut out = Output::zero();
     let mut last_match = None;

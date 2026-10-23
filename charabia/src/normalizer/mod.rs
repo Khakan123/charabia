@@ -20,6 +20,8 @@ use self::quote::QuoteNormalizer;
 use self::swedish_recomposition::SwedishRecompositionNormalizer;
 #[cfg(feature = "turkish")]
 pub use self::turkish::TurkishNormalizer;
+#[cfg(feature = "urdu-normalization")]
+pub use self::urdu::UrduNormalizer;
 #[cfg(feature = "vietnamese")]
 pub use self::vietnamese::VietnameseNormalizer;
 use crate::segmenter::SegmentedTokenIter;
@@ -42,6 +44,8 @@ mod quote;
 mod swedish_recomposition;
 #[cfg(feature = "turkish")]
 mod turkish;
+#[cfg(feature = "urdu-normalization")]
+mod urdu;
 #[cfg(feature = "vietnamese")]
 mod vietnamese;
 
@@ -66,6 +70,8 @@ pub static LOSSY_NORMALIZERS: LazyLock<Vec<Box<dyn Normalizer>>> = LazyLock::new
         Box::new(LowercaseNormalizer),
         Box::new(QuoteNormalizer),
         Box::new(AeOeNormalizer),
+        #[cfg(feature = "urdu-normalization")]
+        Box::new(UrduNormalizer),
         #[cfg(feature = "chinese-normalization")]
         Box::new(ChineseNormalizer),
         #[cfg(feature = "japanese-transliteration")]

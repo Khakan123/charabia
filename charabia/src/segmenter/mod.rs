@@ -19,6 +19,8 @@ pub use latin::LatinSegmenter;
 use slice_group_by::StrGroupBy;
 #[cfg(feature = "thai")]
 pub use thai::ThaiSegmenter;
+#[cfg(feature = "urdu-segmentation")]
+pub use urdu::UrduSegmenter;
 
 use crate::detection::{Detect, Language, Script, StrDetection};
 use crate::separators::DEFAULT_SEPARATORS;
@@ -38,7 +40,14 @@ mod korean;
 mod latin;
 #[cfg(feature = "thai")]
 mod thai;
-#[cfg(any(feature = "thai", feature = "khmer"))]
+#[cfg(feature = "urdu-segmentation")]
+mod urdu;
+#[cfg(any(
+    feature = "thai",
+    feature = "khmer",
+    feature = "german-segmentation",
+    feature = "urdu-segmentation"
+))]
 mod utils;
 
 pub type SegmenterMap = HashMap<(Script, Option<Language>), Box<dyn Segmenter>>;
@@ -83,6 +92,9 @@ pub static SEGMENTERS: LazyLock<SegmenterMap> = LazyLock::new(|| {
         // german segmenter
         #[cfg(feature = "german-segmentation")]
         ((Script::Latin, Some(Language::Deu)), Box::new(GermanSegmenter) as Box<dyn Segmenter>),
+        // urdu segmenter
+        #[cfg(feature = "urdu-segmentation")]
+        ((Script::Arabic, Some(Language::Urd)), Box::new(UrduSegmenter) as Box<dyn Segmenter>),
     ]
     .into_iter()
     .collect()

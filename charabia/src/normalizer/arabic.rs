@@ -1,4 +1,5 @@
 use super::{CharNormalizer, CharOrStr};
+use crate::detection::Language;
 use crate::{Script, Token};
 
 /// A global [`Normalizer`] for Arabic language.
@@ -20,7 +21,9 @@ impl CharNormalizer for ArabicNormalizer {
     }
 
     fn should_normalize(&self, token: &Token) -> bool {
-        token.script == Script::Arabic && token.lemma.chars().any(is_shoud_normalize)
+        token.script == Script::Arabic
+            && token.language != Some(Language::Urd)
+            && token.lemma.chars().any(is_shoud_normalize)
     }
 }
 

@@ -1,0 +1,70 @@
+# Python package
+# Create and test a Python package on multiple Python versions.
+# Add steps that analyze code, save the dist with the build record, publish to a PyPI-compatible index, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/python
+
+trigger:
+  batch: true
+  branches:
+    include:
+      - '*'
+
+jobs:
+# Perform basic checks for most important errors (syntax etc.) Uses the config
+- job: 'Validate'
+  pool:
+    vmImage: 'ubuntu-20.04'
+  steps:
+  - task: UsePythonVersion@0
+    inputs:
+      versionSpec: '3.8'
+  - script: |
+      python -m pip install --upgrade pip
+      pip install -r dev-requirements.txt
+      pip install .[tf]
+      pip install pytest-azurepipelines
+      urduhack download
+      pytest
+    displayName: 'pylint'
+
+- job: 'Test'
+  dependsOn: 'Validate'
+  strategy:
+    matrix:
+      Python38Linux:
+        imageName: 'ubuntu-20.04'
+        python.version: '3.8'
+      Python38Windows:
+        imageName: 'vs2017-win2016'
+        python.version: '3.8'
+      Python38Mac:
+        imageName: 'macos-10.15'
+        python.version: '3.8'
+  pool:
+      vmImage: $(imageName)
+
+  steps:
+  - task: UsePythonVersion@0
+    inputs:
+      versionSpec: '$(python.version)'
+    displayName: 'Use Python $(python.version)'
+
+  - script: |
+      python -m pip install --upgrade pip
+      pip install -r dev-requirements.txt
+      pip install .[tf]
+      pip install pytest-azurepipelines
+      urduhack download
+    displayName: 'Install dependencies'
+
+  - script: |
+      urduhack download
+    displayName: 'Downloading Urduhack models'
+
+  - script: |
+      urduhack info
+    displayName: 'Urduhack info'
+
+  - script: |
+      pytest --cov=./ --cov-report html
+    displayName: 'pytest'
