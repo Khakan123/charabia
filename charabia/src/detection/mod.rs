@@ -47,7 +47,13 @@ impl<'o, 'al> StrDetection<'o, 'al> {
     /// if no language is detected, return Language::Other
     fn detect_lang(text: &str, allow_list: Option<&[Language]>) -> Option<Language> {
         let detector = allow_list
-            .map(|allow_list| allow_list.iter().map(|lang| (*lang).into()).collect())
+            .map(|allow_list| {
+                allow_list
+                    .iter()
+                    .filter(|lang| **lang != Language::Qur)
+                    .map(|lang| (*lang).into())
+                    .collect()
+            })
             .map(Detector::with_allowlist)
             .unwrap_or_default();
 

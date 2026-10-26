@@ -12,6 +12,7 @@ macro_rules! make_language {
         pub enum Language {
             Zho,
             $($language),+,
+            Qur,
         }
         impl From<whatlang::Lang> for Language {
             fn from(other: whatlang::Lang) -> Language {
@@ -25,6 +26,8 @@ macro_rules! make_language {
             fn from(other: Language) -> whatlang::Lang {
                 match other {
                     Language::Zho => whatlang::Lang::Cmn,
+                    // Compatibility conversion; never use Qur as an automatic detection candidate.
+                    Language::Qur => whatlang::Lang::Ara,
                     $(Language::$language => whatlang::Lang::$language), +,
                 }
             }
@@ -34,6 +37,7 @@ macro_rules! make_language {
             pub fn code(&self) -> &'static str {
                 match self {
                     Language::Zho => "zho",
+                    Language::Qur => "qur",
                     $(Language::$language => whatlang::Lang::$language.code()), +,
                 }
             }
@@ -41,6 +45,7 @@ macro_rules! make_language {
             pub fn from_code<S: AsRef<str>>(code: S) -> Option<Language> {
                 match code.as_ref() {
                     "zho" => Some(Language::Zho),
+                    "qur" => Some(Language::Qur),
                     _ => whatlang::Lang::from_code(code.as_ref()).map(Language::from),
                 }
             }

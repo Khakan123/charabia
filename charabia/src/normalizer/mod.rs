@@ -38,6 +38,7 @@ mod japanese;
 mod lowercase;
 mod nonspacing_mark;
 mod quote;
+mod quran;
 #[cfg(feature = "swedish-recomposition")]
 mod swedish_recomposition;
 #[cfg(feature = "turkish")]
@@ -263,6 +264,9 @@ impl Normalize for Token<'_> {
     ///
     /// A Latin `Token` would not be normalized the same as a Chinese `Token`.
     fn normalize(mut self, options: &NormalizerOption) -> Self::Item {
+        if self.language == Some(crate::Language::Qur) {
+            return quran::normalize(self, options);
+        }
         for normalizer in NORMALIZERS.iter() {
             if normalizer.should_normalize(&self) {
                 self = normalizer.normalize(self, options);

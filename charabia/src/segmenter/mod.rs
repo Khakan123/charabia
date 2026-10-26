@@ -36,6 +36,7 @@ mod khmer;
 #[cfg(feature = "korean")]
 mod korean;
 mod latin;
+mod quran;
 #[cfg(feature = "thai")]
 mod thai;
 #[cfg(any(feature = "thai", feature = "khmer"))]
@@ -152,6 +153,18 @@ impl<'o, 'aho, 'lang> SegmentedStrIter<'o, 'aho, 'lang> {
         aho: Option<&'aho AhoCorasick>,
         allow_list: Option<&'lang [Language]>,
     ) -> Self {
+        if allow_list == Some(&[Language::Qur][..]) {
+            return Self {
+                inner: Box::new(std::iter::empty()),
+                current: Box::new(quran::QuranSegments::new(original)),
+                aho_iter: None,
+                segmenter: &*DEFAULT_SEGMENTER,
+                aho,
+                allow_list,
+                script: Script::Arabic,
+                language: Some(Language::Qur),
+            };
+        }
         let mut current_script = Script::Other;
         let mut group_id = 0;
         let inner = original.linear_group_by_key(move |c| {

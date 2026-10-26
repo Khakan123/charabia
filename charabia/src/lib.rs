@@ -49,6 +49,7 @@ extern crate quickcheck;
 extern crate quickcheck_macros;
 
 pub mod normalizer;
+pub mod quran_articles;
 pub mod segmenter;
 pub mod separators;
 

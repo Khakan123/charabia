@@ -89,6 +89,7 @@ turkish = []
 german-segmentation = []
 
 [dev-dependencies]
+serde_json = "1"
 criterion = "0.8"
 quickcheck = "1"
 quickcheck_macros = "1"
